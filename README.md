@@ -1,3 +1,9 @@
-# Project 2
+# HarvardX CS50_Web Project 2
 
-Web Programming with Python and JavaScript
+Bu projede flask, html, css, javascript, bootstrap ve socket.io kullanarak online bir mesajlaşma uygulaması yapmaktayım. Bu proje Edx platformu üzerinden almış olduğum cs50 web development serisinin lecture 5'den sonraki project2'dir(https://docs.cs50.net/web/2019/x/projects/2/project2.html).
+
+requirements.txt = projenin çalışması için gereki python kütüphaneleri ('pip install requiments.txt' yazıp kurulabilir)
+
+static/ = kullandığım resim dosyaları
+
+templates/ = flask için kullanılan html şablonları
