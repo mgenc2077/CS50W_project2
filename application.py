@@ -1,18 +1,18 @@
 import os
-
-from flask import Flask, session, render_template, request, redirect, g, url_for
-from flask_socketio import SocketIO, emit
+import requests
+from flask import Flask, session, render_template, request, redirect, g, url_for, jsonify
+from flask_socketio import SocketIO, emit, join_room, leave_room, send
 from flask_session import Session
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
 
 app = Flask(__name__, static_url_path='/static')
-app.secret_key = os.urandom(24)
+app.config['SECRET_KEY'] = 'mysecret'
 socketio = SocketIO(app)
 
 # Check for environment variable
-if not os.getenv("DATABASE_URL"):
-    raise RuntimeError("DATABASE_URL is not set")
+#if not os.getenv("DATABASE_URL"):
+#    raise RuntimeError("DATABASE_URL is not set")
 
 # Configure session to use filesystem
 app.config["SESSION_PERMANENT"] = False
@@ -20,24 +20,26 @@ app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
 
 # Set up database
-engine = create_engine(os.getenv("DATABASE_URL"))
-db = scoped_session(sessionmaker(bind=engine))
-db = db()
-
+#engine = create_engine(os.getenv("DATABASE_URL"))
+#db = scoped_session(sessionmaker(bind=engine))
+#db = db()
 
 @app.route("/")
 def index():
     return render_template("index.html")
 
-@app.route("/kanal" methods=["POST"])
-def kanal():
-    kanal_adi = request.form.get("Kanal_Adi")
-    kanal_no = request.form.get("Kanal_No")
+#@app.route("/kanal", methods=["POST"])
+#def kanal():
+#    kanal_adi = request.form.get("Kanal_Adi")
+#    kanal_no = request.form.get("Kanal_No")
 
-@socketio.on("mesaj")
-def mesaj(data):
-    .
-
+@socketio.on("baglanti")
+def baglanti(data):
+    kanal_adi = data["msg"]
+    #kanal_no = data["kanal_no"]
+    print("ad: " + kanal_adi)
+    #print("no: " + Kanal_No)
+    emit("gonder", broadcast=True)
 
 
 
