@@ -3,26 +3,19 @@ import requests
 from flask import Flask, session, render_template, request, redirect, g, url_for, jsonify
 from flask_socketio import SocketIO, emit, join_room, leave_room, send
 from flask_session import Session
-from sqlalchemy import create_engine
-from sqlalchemy.orm import scoped_session, sessionmaker
+import eventlet
 
 app = Flask(__name__, static_url_path='/static')
-app.config['SECRET_KEY'] = 'mysecret'
+app.config['SECRET_KEY'] = os.getenv("SECRET_KEY")
 socketio = SocketIO(app)
 
-# Check for environment variable
-#if not os.getenv("DATABASE_URL"):
-#    raise RuntimeError("DATABASE_URL is not set")
-
 # Configure session to use filesystem
-app.config["SESSION_PERMANENT"] = False
-app.config["SESSION_TYPE"] = "filesystem"
-Session(app)
+#app.config["SESSION_PERMANENT"] = False
+#app.config["SESSION_TYPE"] = "filesystem"
+#Session(app)
 
-# Set up database
-#engine = create_engine(os.getenv("DATABASE_URL"))
-#db = scoped_session(sessionmaker(bind=engine))
-#db = db()
+if __name__ == '__main__':
+    socketio.run(app)
 
 @app.route("/")
 def index():
@@ -34,12 +27,10 @@ def index():
 #    kanal_no = request.form.get("Kanal_No")
 
 @socketio.on("baglanti")
-def baglanti(data):
-    kanal_adi = data["msg"]
-    #kanal_no = data["kanal_no"]
-    print("ad: " + kanal_adi)
-    #print("no: " + Kanal_No)
-    emit("gonder", broadcast=True)
+def handle_baglanti(data):
+    eben = data["eben"]
+    print("ad:" + eben)
+    emit("gonder", {"eben": eben}, broadcast=True)
 
 
 
