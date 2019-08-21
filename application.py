@@ -3,7 +3,8 @@ import requests
 from flask import Flask, session, render_template, request, redirect, g, url_for, jsonify
 from flask_socketio import SocketIO, emit, join_room, leave_room, send
 from flask_session import Session
-import eventlet
+import gevent
+from gevent import socket
 
 app = Flask(__name__, static_url_path='/static')
 app.config['SECRET_KEY'] = os.getenv("SECRET_KEY")
