@@ -3,24 +3,25 @@ import requests
 from flask import Flask, session, render_template, request, redirect, g, url_for, jsonify
 from flask_socketio import SocketIO, emit, join_room, leave_room, send
 from flask_session import Session
-import gevent
-from gevent import socket
 
 app = Flask(__name__, static_url_path='/static')
 app.config['SECRET_KEY'] = os.getenv("SECRET_KEY")
 socketio = SocketIO(app)
+global eben
 
 # Configure session to use filesystem
 #app.config["SESSION_PERMANENT"] = False
 #app.config["SESSION_TYPE"] = "filesystem"
 #Session(app)
 
+eben = "deneme"
+
 if __name__ == '__main__':
     socketio.run(app)
 
 @app.route("/")
 def index():
-    return render_template("index.html")
+    return render_template("index.html", eben=eben)
 
 #@app.route("/kanal", methods=["POST"])
 #def kanal():
@@ -29,6 +30,7 @@ def index():
 
 @socketio.on("baglanti")
 def handle_baglanti(data):
+    global eben
     eben = data["eben"]
     print("ad:" + eben)
     emit("gonder", {"eben": eben}, broadcast=True)
