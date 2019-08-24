@@ -1,2 +1,4 @@
 Calistirma.bat
 static/index.js
+__pycache__/*
+flask_session/*
