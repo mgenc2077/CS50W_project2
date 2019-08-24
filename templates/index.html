@@ -1,25 +1,25 @@
 {% extends "layout.html" %}
 
 {% block script %}
-<script type="text/javascript" src=/static/index.js></script>
+<script type="text/javascript" src=/static/index1.js></script>
 {% endblock %}
 {% block heading %}
     Bağlantı ekranı
 {% endblock %}
 {% block body %}
-  <form id="form">
+  <form action="" id="tus" method="POST">
     <div class="form-group">
       <label for="Kanal_Adi">Kanaldaki Kullanacağınız adınız:</label>
-      <input type="text" class="form-control" id="Kanal_Adi" placeholder="Kanaldaki adınız">
+      <input type="text" class="username" id="Kanal_Adi" placeholder="Kanaldaki adınız">
     </div>
     <div class="form-group">
       <label for="Kanal_No">Kanal Numarası</label>
-      <input type="text" class="form-control" id="Kanal_No" placeholder="Kanal Numarasını giriniz">
+      <input type="text" class="message" id="Kanal_No" placeholder="Kanal Numarasını giriniz">
     </div>
-    <button type="submit" class="btn btn-primary" id="tus">Submit</button>
+    <input type="submit"/>
   </form>
-  <button id="tus">Submit</button>
-  <ul id="yazi">
-  </ul>
-  <hr>
+  <hr> 
+  <ol id="messages">
+  </ol>
+  <div class="message_holder"></div>
 {% endblock %}
