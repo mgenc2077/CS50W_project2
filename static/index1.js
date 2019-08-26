@@ -1,17 +1,15 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Mesaj kutusunu temizleme
-    //document.querySelector('#Kanal_No').value = '';
     // Çıkış butonu
-    //document.querySelector('#cikis').onclick = () => {
-    //    localStorage.removeItem('nick');
-    //    alert('Çıkış Tamamlandı');
-    //}
-    //// Giriş butonu
-    //document.querySelector('#giris').onclick = () => {
-    //    let nick = document.querySelector('#Kanal_Adi').value;
-    //    localStorage.setItem('nick', nick);
-    //    alert('Giriş Tamamlandı');
-    //}
+    document.querySelector('#cikis').onclick = () => {
+        localStorage.removeItem('nick');
+        alert('Çıkış Tamamlandı');
+    }
+    // Giriş butonu
+    document.querySelector('#giris').onclick = () => {
+        let nick = document.querySelector('#Kanal_Adi').value;
+        localStorage.setItem('nick', nick);
+        alert('Giriş Tamamlandı');
+    }
     // kanal listesi yenileme butonu
     document.querySelector('#refresh').onclick = () => {
         const request = new XMLHttpRequest();
@@ -31,12 +29,47 @@ document.addEventListener('DOMContentLoaded', () => {
         data.append('currency', kanal);
         request.send(data);
     }
-    //if (localStorage.getItem('nick') != undefined) {
-    //    document.querySelector('#Kanal_Adi').value = localStorage.getItem('nick');
-    //}
-    //if (localStorage.getItem('channel') != undefined) {
-    //    document.querySelector('#channel').value = localStorage.getItem('channel');
-    //}
+    document.querySelector('#yenile').onclick = () => {
+        const request = new XMLHttpRequest();
+        const rinne = document.querySelector('#channel').value;
+        console.log({ rinne })
+        request.open('POST', '/mesajlist');
+        request.onload = () => {
+            const random = JSON.parse(request.responseText);
+            const mes_lis = random['gecmis'];
+            var test96 = Object.entries(mes_lis);
+            var i;
+            console.log({ test96 });
+            for (i = 0; i < mes_lis.length; i++) {
+                document.querySelector('ul#messages').innerHTML += "<li>" + test96[i][2] + " &rAarr; " +  test96[i][1]  + " &nRightarrow; " + test96[i][0] +"</li>";
+            };
+        //    <div class="row justify-content-center">
+        //    <table class="table table-dark">
+        //    <th>
+        //        <tr>
+        //            <td>5 üzerinden</td>
+        //            <td>yorum</td>
+        //        </tr>
+        //    </th>
+        //    {% for item in data %}
+        //    <tr>
+        //        <td>{{ item[0] }}</td>
+        //        <td>{{ item[1] }}</td>
+        //        {% endfor %}
+        //    </tr>
+        //</table>
+        //</div>
+        }
+        const data = new FormData();
+        data.append('history', rinne);
+        request.send(data);
+    }    
+    if (localStorage.getItem('nick') != undefined) {
+        document.querySelector('#Kanal_Adi').value = localStorage.getItem('nick');
+    }
+    if (localStorage.getItem('channel') != undefined) {
+        document.querySelector('#channel').value = localStorage.getItem('channel');
+    }
     // Websocket link bağlantısı
     var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port);
     socket.on('connect', () => {
@@ -44,13 +77,6 @@ document.addEventListener('DOMContentLoaded', () => {
         socket.emit('baglanti', {
             data: 'Kullanici Baglandi'
         });
-        // Giriş ekranında adı hatırlama
-        //if (localStorage.getItem('nick')) {
-        //    document.querySelector('#Kanal_Adi').innerHTML = localStorage.getItem('nick');
-        //}
-        //if (localStorage.getItem('channel')) {
-        //    document.querySelector('#channel').innerHTML = localStorage.getItem('channel');
-        //}
         //formdan veri alınması
         document.querySelector('form').onsubmit = ( e ) => {
             e.preventDefault();
@@ -65,7 +91,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 kanal_no : kanal_no,
                 channel : channel
             });
-            //document.querySelector('#Kanal_No').value = ''
+            document.querySelector('#Kanal_No').value = ''
         };
     });
     // Gelen verilerin gösterilmesi
