@@ -32,33 +32,18 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelector('#yenile').onclick = () => {
         const request = new XMLHttpRequest();
         const rinne = document.querySelector('#channel').value;
-        console.log({ rinne })
+        console.log({ rinne });
         request.open('POST', '/mesajlist');
         request.onload = () => {
             const random = JSON.parse(request.responseText);
             const mes_lis = random['gecmis'];
-            var test96 = Object.entries(mes_lis);
             var i;
-            console.log({ test96 });
+            console.log({ mes_lis });
             for (i = 0; i < mes_lis.length; i++) {
-                document.querySelector('ul#messages').innerHTML += "<li>" + test96[i][2] + " &rAarr; " +  test96[i][1]  + " &nRightarrow; " + test96[i][0] +"</li>";
+                let temp = Object.values(mes_lis[i])
+                console.log({ temp })
+                document.querySelector('ul#messages').innerHTML += "<li>" + temp[2] + " &rAarr; " +  temp[0]  + " &nRightarrow; " + temp[1] +"</li>";
             };
-        //    <div class="row justify-content-center">
-        //    <table class="table table-dark">
-        //    <th>
-        //        <tr>
-        //            <td>5 üzerinden</td>
-        //            <td>yorum</td>
-        //        </tr>
-        //    </th>
-        //    {% for item in data %}
-        //    <tr>
-        //        <td>{{ item[0] }}</td>
-        //        <td>{{ item[1] }}</td>
-        //        {% endfor %}
-        //    </tr>
-        //</table>
-        //</div>
         }
         const data = new FormData();
         data.append('history', rinne);
@@ -83,7 +68,6 @@ document.addEventListener('DOMContentLoaded', () => {
             let kanal_adi = document.querySelector('#Kanal_Adi').value;
             let kanal_no = document.querySelector('#Kanal_No').value;
             let channel = document.querySelector('#channel').value;
-            //localStorage.setItem('channel', channel);
             console.log({ kanal_adi, kanal_no, channel })
             // server'a veri gönderilmesi
             socket.emit('test', {

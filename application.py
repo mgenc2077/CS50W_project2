@@ -63,26 +63,12 @@ def handle_my_custom_event(json):
     nick = serialize["kullanici_adi"]
     soz = serialize["kanal_no"]
     db.execute("INSERT INTO mesages (nick, soz, kanal, zaman) VALUES (:nick, :soz, :kanal, :zaman)",{"nick": str(nick), "soz": str(soz), "kanal": str(kanal), "zaman": str(suan)})
-    db.commit()
-    #rinne = kanal
-    #rinnem = kanal
-    #kanal = yeni_kanal(ad=kanal)
-    #m = mesaj(nick=kullanici_adi, soz=soz, kanal=rinne, zaman=suan)
-    #rinnem += '<li> ' + suan + ' &rAarr; ' + kullanici_adi + ' &nRightarrow; ' + soz + ' </li>'
-    #kanal.add_mesaj(p=m)
-    #calis.add_kanal(kanal)
-    #for k in kanal.gecmis:
-    #    test86 = len(kanal.gecmis)
-    #    k.print_info()
-    #    print('liste uzunluğu ne yazıkki: ' + str(test86))
-    #    print('')
-    #print(rinnem)
-    #channel.append(rinne)
     if(request.sid):{
         leave_room(kanal)
     }
     join_room(kanal)
     socketio.emit('gonder', json, callback=messageReceived, room=kanal)
+    db.commit()
 
 @socketio.on("baglanti")
 def handle_baglanti(json):
