@@ -2,5 +2,5 @@ Calistirma.bat
 static/index.js
 __pycache__/*
 flask_session/*
-create.sql
 PostgreSQL_Tablo_Olusturucu.py
+classes.py

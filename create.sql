@@ -1,0 +1,7 @@
+CREATE TABLE mesages (
+    id SERIAL PRIMARY KEY,
+    nick VARCHAR NOT NULL,
+    soz VARCHAR NOT NULL,
+    kanal VARCHAR NOT NULL,
+    zaman VARCHAR NOT NULL
+);
